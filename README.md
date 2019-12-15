@@ -22,12 +22,12 @@ class Screen extends StatefulWidget {
 
 class _ScreenState extends State<Screen> with ScreenLoader {
 
-  _getData() {
+  _getData() async {
     // start loading
     this.startLoading(this);
     
     // do some future stuff
-    Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 3));
     
     //stop loading
     this.stopLoading(this);
