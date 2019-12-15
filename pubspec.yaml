@@ -1,7 +1,6 @@
 name: screen_loader
-description: Easy to use mixin to show loader on screen
-version: 0.0.1
-author: Arnold Parge
+description: Easy to use mixin ScreenLoader, which will hadle the loading on the screen. You can customise the loading as well.
+version: 1.0.3
 homepage: https://github.com/arnold-parge/screen_loader
 
 environment:
