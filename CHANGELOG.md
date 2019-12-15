@@ -1,16 +1,18 @@
-## [1.0.0]
+## [1.0.3]
 
-* Initial release
+* Added example
 
-## [1.0.1]
-
-* Updated description in pubspec.yaml
 
 ## [1.0.2]
 
 * Updated description in pubspec.yaml
 
 
-## [1.0.3]
+## [1.0.1]
 
-* Added example
+* Updated description in pubspec.yaml
+
+
+## [1.0.0]
+
+* Initial release
