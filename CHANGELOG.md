@@ -1,3 +1,8 @@
+## [1.0.4]
+
+* Updated description
+
+
 ## [1.0.3]
 
 * Added example
