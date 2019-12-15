@@ -99,9 +99,9 @@ class MyApp extends StatelessWidget {
 
 ## Priority of loaders
 
-- Local loader, the one you override in the `_ScreenState` class
-- Global loader, the one you specify in `ScreenLoaderApp`. Note: if you don't override `local()`, this loader will be used.
-- Default loader, if you don't specify global loader or override local loader, this loader will be used
+- **Local loader**: the one you override in the `_ScreenState` class
+- **Global loader**: the one you specify in `ScreenLoaderApp`. Note: if you don't override `local()`, this loader will be used.
+- **Default loader**: if you don't specify global loader or override local loader, this loader will be used
 
 ### PS 
 PRs are welcome. Please raise issue if you face any.
