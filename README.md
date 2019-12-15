@@ -1,6 +1,6 @@
 # screen_loader
 
-Using `showDialog` for showing loader is a **BAD IDEA**. You may end up messing the navigation stack sue to pushing and poping the loader. Hence, I have come up with an easy to use mixin `ScreenLoader`, which will hadle the loading on the screen. You can customise the loading as well, check below how.
+Using `showDialog` for showing loader is a **BAD IDEA**. You may end up messing the navigation stack due to pushing and popping the loader(dialog). Hence, I have come up with an easy to use mixin `ScreenLoader`, which will handle the loading on the screen. You can customise the loading as well, check below how it is done.
 
 ## Installation
 
