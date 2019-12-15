@@ -2,7 +2,7 @@ name: screen_loader
 description: Easy to use mixin to show loader on screen
 version: 0.0.1
 author: Arnold Parge
-homepage: 
+homepage: https://github.com/arnold-parge/screen_loader
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

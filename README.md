@@ -104,4 +104,4 @@ class MyApp extends StatelessWidget {
 - **Default loader**: if you don't specify global loader or override local loader, this loader will be used
 
 ### PS 
-PRs are welcome. Please raise issue if you face any.
+PRs are welcome. Please raise issue if you face any on https://github.com/arnold-parge/screen_loader.
