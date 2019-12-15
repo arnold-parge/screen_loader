@@ -58,6 +58,8 @@ class _ScreenState extends State<Screen> with ScreenLoader {
 
 ```
 
+![Basic Example](https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example/basic.gif)
+
 ## Override Loader
 
 Simply overide `loader()` method in your `_ScreenState` class
@@ -70,6 +72,8 @@ loader() {
     );
 }
 ```
+
+![Local Loader Example](https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example/local.gif)
 
 ## Override Loader Gobally
 
@@ -96,6 +100,8 @@ class MyApp extends StatelessWidget {
 }
 
 ```
+
+![Global Loader Example](https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example/global.gif)
 
 ## Priority of loaders
 
