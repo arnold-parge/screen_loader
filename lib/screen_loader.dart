@@ -3,22 +3,32 @@ library screen_loader;
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-class ScreenLoader {
+mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   bool isLoading = false;
   static Widget _globalLoader;
 
   /// starts the [loader]
-  startLoading(State state) {
-    state.setState(() {
+  startLoading() {
+    this.setState(() {
       isLoading = true;
     });
   }
 
   /// stops the [loader]
-  stopLoading(State state) {
-    state.setState(() {
+  stopLoading() {
+    this.setState(() {
       isLoading = false;
     });
+  }
+
+  /// DO NOT use this method in FutureBuilder because this methods
+  /// updates the state which will make future builder to call
+  /// this function again and it will go in loop
+  Future<T> performFuture<T>(Function futureCallback) async {
+    this.startLoading();
+    T data = await futureCallback();
+    this.stopLoading();
+    return data;
   }
 
   /// override [loader] if you wish to add custom loader in specific view
@@ -46,15 +56,15 @@ class ScreenLoader {
   }
 
   /// Wraps [child] as screen into [loader]
-  Widget screenWrapper(Widget child) {
+  Widget screenWrapper({@required Widget child}) {
     return Stack(
       children: <Widget>[
         child,
         BackdropFilter(
           child: _buildLoader(),
           filter: ImageFilter.blur(
-            sigmaX: 2.0,
-            sigmaY: 2.0,
+            sigmaX: 5.0,
+            sigmaY: 5.0,
           ),
         ),
       ],
