@@ -1,3 +1,12 @@
+## [1.1.0]  
+
+### Breaking changes
+* Removed state parameter from `screenWrapper` function
+* Added performFuture
+* Added BasicScreen in example
+* Added loadingBgBlur in ScreenLoader
+
+
 ## [1.0.4]
 
 * Updated description
