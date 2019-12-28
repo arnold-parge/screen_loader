@@ -6,57 +6,12 @@ Using `showDialog` for showing loader is a **BAD IDEA**. You may end up messing 
 
 Add dependency in pubspec.yaml:
 ```
-screen_loader: ^1.0.0
+screen_loader: ^1.1.0
 ```
 
 ## Basic Usage
 
-Extend your screen(`StatefulWidget`) with `ScreenLoader`. Use `this.startLoading(this)` to start loading and use `this.stopLoading(this)` to stop loading. That's it!
-
-```
-
-class Screen extends StatefulWidget {
-  @override
-  _ScreenState createState() => _ScreenState();
-}
-
-class _ScreenState extends State<Screen> with ScreenLoader {
-
-  _getData() async {
-    // start loading
-    this.startLoading(this);
-    
-    // do some future stuff
-    await Future.delayed(Duration(seconds: 3));
-    
-    //stop loading
-    this.stopLoading(this);
-  }
-
-  Widget _buildBody() {
-    return Center(
-      child: MaterialButton(
-        child: Text('Get Data'),
-        onPressed: this._getData,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Sample ScreenLoader'),
-      ),
-      // wrap your body in `screenWrapper`
-      body: this.screenWrapper(
-        this._buildBody(),
-      ),
-    );
-  }
-}
-
-```
+Extend your screen(`StatefulWidget`) with `ScreenLoader`. Use `performFuture` to show loader while your future us being performed. That's it!
 
 ![Basic Example](https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example/basic.gif)
 
