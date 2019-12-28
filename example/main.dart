@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       globalLoader: AlertDialog(
         title: Text('Gobal Loader..'),
       ),
+      globalLoadingBgBlur: 20.0,
     );
   }
 }
@@ -34,6 +35,9 @@ class _ScreenState extends State<Screen> with ScreenLoader<Screen> {
       title: Text('Wait.. Loading data..'),
     );
   }
+
+  @override
+  loadingBgBlur() => 10.0;
 
   Widget _buildBody() {
     return Center(
@@ -96,6 +100,6 @@ class _BasicScreenState extends State<BasicScreen>
 
 class NetworkService {
   static Future getData() async {
-    return await Future.delayed(Duration(seconds: 5));
+    return await Future.delayed(Duration(seconds: 2));
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   bool isLoading = false;
   static Widget _globalLoader;
+  static double _globalLoadingBgBlur = 5.0;
 
   /// starts the [loader]
   startLoading() {
@@ -29,6 +30,15 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
     T data = await futureCallback();
     this.stopLoading();
     return data;
+  }
+
+  /// override [loadingBgBlur] if you wish to change blur in specific view
+  double loadingBgBlur() {
+    return null;
+  }
+
+  double _loadingBgBlur() {
+    return this.loadingBgBlur() ?? ScreenLoader._globalLoadingBgBlur ?? 5.0;
   }
 
   /// override [loader] if you wish to add custom loader in specific view
@@ -63,8 +73,8 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
         BackdropFilter(
           child: _buildLoader(),
           filter: ImageFilter.blur(
-            sigmaX: 5.0,
-            sigmaY: 5.0,
+            sigmaX: this._loadingBgBlur(),
+            sigmaY: this._loadingBgBlur(),
           ),
         ),
       ],
@@ -76,15 +86,18 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
 class ScreenLoaderApp extends StatelessWidget {
   final MaterialApp app;
   final Widget globalLoader;
+  final double globalLoadingBgBlur;
 
   ScreenLoaderApp({
     @required this.app,
     this.globalLoader,
+    this.globalLoadingBgBlur,
   });
 
   @override
   Widget build(BuildContext context) {
-    ScreenLoader._globalLoader = globalLoader;
+    ScreenLoader._globalLoader = this.globalLoader;
+    ScreenLoader._globalLoadingBgBlur = this.globalLoadingBgBlur;
     return app;
   }
 }
