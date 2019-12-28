@@ -82,7 +82,7 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   }
 }
 
-/// [ScreenLoaderApp] is used to provide [globalLoader]
+/// [ScreenLoaderApp] is used to provide global settings for the screen loader
 class ScreenLoaderApp extends StatelessWidget {
   final MaterialApp app;
   final Widget globalLoader;
