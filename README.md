@@ -6,7 +6,7 @@ Using `showDialog` for showing loader is a **BAD IDEA**. You may end up messing 
 
 Add dependency in pubspec.yaml:
 ```
-screen_loader: ^1.1.0
+screen_loader: ^1.1.1
 ```
 
 ## Basic Usage
