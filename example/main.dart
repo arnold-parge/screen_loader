@@ -90,7 +90,7 @@ class _BasicScreenState extends State<BasicScreen>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await this.performFuture<int>(NetworkService.getData);
+          await this.performFuture(NetworkService.getData);
         },
         child: Icon(Icons.refresh),
       ),

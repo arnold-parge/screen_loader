@@ -32,7 +32,7 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
     return data;
   }
 
-  /// override [loadingBgBlur] if you wish to change blur in specific view
+  /// override [loadingBgBlur] if you wish to change blur value in specific view
   double loadingBgBlur() {
     return null;
   }
