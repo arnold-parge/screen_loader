@@ -49,14 +49,12 @@ class _ScreenState extends State<Screen> with ScreenLoader<Screen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget screen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('ScreenLoader Example'),
       ),
-      body: this.screenWrapper(
-        child: this._buildBody(),
-      ),
+      body: _buildBody(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await this.performFuture(NetworkService.getData);
@@ -75,17 +73,15 @@ class BasicScreen extends StatefulWidget {
 class _BasicScreenState extends State<BasicScreen>
     with ScreenLoader<BasicScreen> {
   @override
-  Widget build(BuildContext context) {
+  Widget screen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Basic ScreenLoader Example'),
       ),
-      body: this.screenWrapper(
-        child: Center(
-          child: Icon(
-            Icons.home,
-            size: MediaQuery.of(context).size.width,
-          ),
+      body: Center(
+        child: Icon(
+          Icons.home,
+          size: MediaQuery.of(context).size.width,
         ),
       ),
       floatingActionButton: FloatingActionButton(

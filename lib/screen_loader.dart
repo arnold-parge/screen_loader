@@ -65,11 +65,13 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
     }
   }
 
-  /// Wraps [child] as screen into [loader]
-  Widget screenWrapper({@required Widget child}) {
+  Widget screen(BuildContext context);
+  
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        child,
+        screen(context),
         BackdropFilter(
           child: _buildLoader(),
           filter: ImageFilter.blur(
