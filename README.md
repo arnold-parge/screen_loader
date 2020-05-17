@@ -1,12 +1,12 @@
 # screen_loader
 
-Using `showDialog` for showing loader is a **BAD IDEA**. You may end up messing the navigation stack due to pushing and popping the loader(dialog). Hence, I have come up with an easy to use mixin `ScreenLoader`, which will handle the loading on the screen. You can customise the loading as well, check below how it is done.
+Using `showDialog` for showing loader is a **BAD IDEA**. You may end up messing the navigation stack and `context` due to pushing and popping the loader(dialog). Hence, I have come up with an easy to use mixin `ScreenLoader`, which will handle the loading on the screen. You can customise the loading as well, check below how it is done.
 
 ## Installation
 
 Add dependency in pubspec.yaml:
 ```
-screen_loader: ^1.1.1
+screen_loader: ^2.0.0
 ```
 
 ## Basic Usage
@@ -65,4 +65,6 @@ class MyApp extends StatelessWidget {
 - **Default loader**: if you don't specify global loader or override local loader, this loader will be used
 
 ### PS 
-PRs are welcome. Please raise issue if you face any on https://github.com/arnold-parge/screen_loader.
+- PRs are welcome
+- Please raise issues on https://github.com/arnold-parge/screen_loader.
+- Open for suggestions ❤️
