@@ -13,7 +13,8 @@ screen_loader: ^1.1.1
 
 Extend your screen(`StatefulWidget`) with `ScreenLoader`. Use `performFuture` to show loader while your future us being performed. That's it!
 
-![Basic Example](https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example/basic.gif =500x)
+<!-- ![Basic Example](https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example/basic.gif =500x) -->
+<img src="https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example/basic.gif" width="250" />
 
 ## Override Loader
 
