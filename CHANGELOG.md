@@ -1,4 +1,9 @@
-## [2.0.0] BREAKING CHANGE
+## [2.0.1]
+* Updated readme as per the previous version's breaking changes
+
+## [2.0.0]
+
+### BREAKING CHANGE
 * `screenWrapper` function removed
 * Now just override `screen` function instead of `build` function in your `StatefulWidget`s
 
