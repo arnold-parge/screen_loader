@@ -25,10 +25,16 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   /// DO NOT use this method in FutureBuilder because this methods
   /// updates the state which will make future builder to call
   /// this function again and it will go in loop
-  Future<T> performFuture<T>(Function futureCallback) async {
+  Future<T> performFuture<T>(Future futureCallback, {Function(Object e) onError}) async {
+    onError = onError ?? (Object e){throw e;};
     this.startLoading();
-    T data = await futureCallback();
-    this.stopLoading();
+    T data = await futureCallback.then((v) {
+      this.stopLoading();
+      return v;
+    }).catchError((e) {
+      this.stopLoading();
+      onError(e);
+    });
     return data;
   }
 

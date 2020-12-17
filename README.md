@@ -26,13 +26,13 @@ Widget screen(BuildContext context) {
 
 Extend your screen(`StatefulWidget`) with `ScreenLoader`. Use `performFuture` to show loader while your future us being performed. That's it!
 
-<img src="https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example/basic.gif" width="250" />
+<img src="https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example_gifs/basic.gif" width="250" />
 
 ## Override Loader
 
 Simply overide `loader()` method in your `_ScreenState` class
 
-```
+```dart
 loader() {
     // here any widget would do
     return AlertDialog(
@@ -41,9 +41,9 @@ loader() {
 }
 ```
 
-<img src="https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example/local.gif" width="250" />
+<img src="https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example_gifs/local.gif" width="250" />
 
-## Override Loader Gobally
+## Override Loader Globally
 
 ```dart
 void main() => runApp(MyApp());
@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
         home: Screen(),
       ),
       globalLoader: AlertDialog(
-        title: Text('Gobal Loader..'),
+        title: Text('Global Loader..'),
       ),
     );
   }
@@ -68,7 +68,23 @@ class MyApp extends StatelessWidget {
 
 ```
 
-<img src="https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example/global.gif" width="250" />
+<img src="https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example_gifs/global.gif" width="250" />
+
+## Handle Errors
+
+```dart
+await this.performFuture(
+  NetworkService.getDataFail(),
+  onError: (e) => showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: Text(e.toString()),
+    ),
+  ),
+);
+```
+
+<img src="https://raw.githubusercontent.com/arnold-parge/screen_loader/master/example_gifs/error.gif" width="250" />
 
 ## Priority of loaders
 
