@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   bool isLoading = false;
-  static Widget _globalLoader;
-  static double _globalLoadingBgBlur = 5.0;
+  static Widget? _globalLoader;
+  static double? _globalLoadingBgBlur = 5.0;
 
   /// starts the [loader]
   startLoading() {
@@ -25,15 +25,15 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   /// DO NOT use this method in FutureBuilder because this methods
   /// updates the state which will make future builder to call
   /// this function again and it will go in loop
-  Future<T> performFuture<T>(Function futureCallback) async {
+  Future<T?> performFuture<T>(Function futureCallback) async {
     this.startLoading();
-    T data = await futureCallback();
+    T? data = await futureCallback();
     this.stopLoading();
     return data;
   }
 
   /// override [loadingBgBlur] if you wish to change blur value in specific view
-  double loadingBgBlur() {
+  double? loadingBgBlur() {
     return null;
   }
 
@@ -42,7 +42,7 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   }
 
   /// override [loader] if you wish to add custom loader in specific view
-  Widget loader() {
+  Widget? loader() {
     return null;
   }
 
@@ -87,11 +87,11 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
 /// [ScreenLoaderApp] is used to provide global settings for the screen loader
 class ScreenLoaderApp extends StatelessWidget {
   final MaterialApp app;
-  final Widget globalLoader;
-  final double globalLoadingBgBlur;
+  final Widget? globalLoader;
+  final double? globalLoadingBgBlur;
 
   ScreenLoaderApp({
-    @required this.app,
+    required this.app,
     this.globalLoader,
     this.globalLoadingBgBlur,
   });

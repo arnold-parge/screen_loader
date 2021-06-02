@@ -1,10 +1,10 @@
 name: screen_loader
 description: Easy to use mixin ScreenLoader, which will handle the loading on the screen. You can customise the loading as well.
-version: 2.0.1
+version: 2.0.2
 homepage: https://github.com/arnold-parge/screen_loader
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
