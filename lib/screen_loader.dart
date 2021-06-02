@@ -1,6 +1,7 @@
 library screen_loader;
 
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 mixin ScreenLoader<T extends StatefulWidget> on State<T> {
@@ -25,7 +26,7 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   /// DO NOT use this method in FutureBuilder because this methods
   /// updates the state which will make future builder to call
   /// this function again and it will go in loop
-  Future<T?> performFuture<T>(Function futureCallback) async {
+  Future<T?> performFuture<T>(Function() futureCallback) async {
     this.startLoading();
     T? data = await futureCallback();
     this.stopLoading();
@@ -66,7 +67,7 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   }
 
   Widget screen(BuildContext context);
-  
+
   @override
   Widget build(BuildContext context) {
     return Stack(
