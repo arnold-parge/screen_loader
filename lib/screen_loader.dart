@@ -26,11 +26,10 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   /// DO NOT use this method in FutureBuilder because this methods
   /// updates the state which will make future builder to call
   /// this function again and it will go in loop
-  Future<T?> performFuture<T>(Function() futureCallback) async {
+  Future<void> performFuture(Function futureCallback) async {
     this.startLoading();
-    T? data = await futureCallback();
+    await futureCallback();
     this.stopLoading();
-    return data;
   }
 
   /// override [loadingBgBlur] if you wish to change blur value in specific view
