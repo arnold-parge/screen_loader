@@ -10,14 +10,14 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
 
   /// starts the [loader]
   startLoading() {
-    this.setState(() {
+    setState(() {
       isLoading = true;
     });
   }
 
   /// stops the [loader]
   stopLoading() {
-    this.setState(() {
+    setState(() {
       isLoading = false;
     });
   }
@@ -26,9 +26,9 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   /// updates the state which will make future builder to call
   /// this function again and it will go in loop
   Future<T?> performFuture<T>(Function futureCallback) async {
-    this.startLoading();
+    startLoading();
     T? data = await futureCallback();
-    this.stopLoading();
+    stopLoading();
     return data;
   }
 
@@ -38,7 +38,7 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   }
 
   double _loadingBgBlur() {
-    return this.loadingBgBlur() ?? ScreenLoader._globalLoadingBgBlur ?? 5.0;
+    return loadingBgBlur() ?? ScreenLoader._globalLoadingBgBlur ?? 5.0;
   }
 
   /// override [loader] if you wish to add custom loader in specific view
@@ -47,38 +47,35 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   }
 
   Widget _loader() {
-    return this.loader() ??
+    return loader() ??
         ScreenLoader._globalLoader ??
-        CircularProgressIndicator();
+        const CircularProgressIndicator();
   }
 
   Widget _buildLoader() {
-    if (this.isLoading) {
-      return Container(
-        color: Colors.transparent,
-        child: Center(
-          child: this._loader(),
-        ),
-      );
-    } else {
-      return Container();
-    }
+    return Container(
+      color: Colors.transparent,
+      child: Center(
+        child: _loader(),
+      ),
+    );
   }
 
   Widget screen(BuildContext context);
-  
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         screen(context),
-        BackdropFilter(
-          child: _buildLoader(),
-          filter: ImageFilter.blur(
-            sigmaX: this._loadingBgBlur(),
-            sigmaY: this._loadingBgBlur(),
+        if (isLoading)
+          BackdropFilter(
+            child: _buildLoader(),
+            filter: ImageFilter.blur(
+              sigmaX: _loadingBgBlur(),
+              sigmaY: _loadingBgBlur(),
+            ),
           ),
-        ),
       ],
     );
   }
@@ -90,16 +87,17 @@ class ScreenLoaderApp extends StatelessWidget {
   final Widget? globalLoader;
   final double? globalLoadingBgBlur;
 
-  ScreenLoaderApp({
+  const ScreenLoaderApp({
+    Key? key,
     required this.app,
     this.globalLoader,
     this.globalLoadingBgBlur,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ScreenLoader._globalLoader = this.globalLoader;
-    ScreenLoader._globalLoadingBgBlur = this.globalLoadingBgBlur;
+    ScreenLoader._globalLoader = globalLoader;
+    ScreenLoader._globalLoadingBgBlur = globalLoadingBgBlur;
     return app;
   }
 }
