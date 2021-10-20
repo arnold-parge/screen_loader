@@ -1,3 +1,6 @@
+## [3.0.0]
+* Migrating to null safety
+
 ## [2.0.1]
 * Updated readme as per the previous version's breaking changes
 
