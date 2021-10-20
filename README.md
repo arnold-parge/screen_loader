@@ -2,13 +2,6 @@
 
 Using `showDialog` for showing loader is a **BAD IDEA**. You may end up messing the navigation stack and `context` due to pushing and popping the loader(dialog). Hence, I have come up with an easy to use mixin `ScreenLoader`, which will handle the loading on the screen. You can customise the loading as well, check below how it is done.
 
-## Installation
-
-Add dependency in pubspec.yaml:
-```
-screen_loader: ^2.0.1
-```
-
 ## Important
 Replace your `build(BuildContext context)` function with `screen(BuildContext context)`
 
