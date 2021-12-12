@@ -107,6 +107,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  stream_mixin:
+    dependency: "direct main"
+    description:
+      name: stream_mixin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.4"
   string_scanner:
     dependency: transitive
     description:

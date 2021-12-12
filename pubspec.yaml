@@ -1,6 +1,6 @@
 name: screen_loader
-description: Easy to use mixin ScreenLoader, which will handle the loading on the screen. You can customise the loading as well.
-version: 3.0.2
+description: Easy to use mixin ScreenLoader, which will handle the loading on the screen without using state or navigation stack. You can customise the loading as well.
+version: 4.0.0
 homepage: https://github.com/arnold-parge/screen_loader
 
 environment:
@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  stream_mixin: ^3.0.4
 
 dev_dependencies:
   flutter_test:

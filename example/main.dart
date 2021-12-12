@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:screen_loader/screen_loader.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  configScreenLoader(
+    loader: AlertDialog(
+      title: Text('Gobal Loader..'),
+    ),
+    bgBlur: 20.0,
+  );
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ScreenLoaderApp(
-      app: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Screen Loader',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Screen(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Screen Loader',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
-      globalLoader: AlertDialog(
-        title: Text('Gobal Loader..'),
-      ),
-      globalLoadingBgBlur: 20.0,
+      home: Screen(),
     );
   }
 }
@@ -28,7 +30,8 @@ class Screen extends StatefulWidget {
   _ScreenState createState() => _ScreenState();
 }
 
-class _ScreenState extends State<Screen> with ScreenLoader<Screen> {
+/// A Stateful screen
+class _ScreenState extends State<Screen> with ScreenLoader {
   @override
   loader() {
     return AlertDialog(
@@ -49,46 +52,47 @@ class _ScreenState extends State<Screen> with ScreenLoader<Screen> {
   }
 
   @override
-  Widget screen(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('ScreenLoader Example'),
-      ),
-      body: _buildBody(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await this.performFuture(NetworkService.getData);
-        },
-        child: Icon(Icons.refresh),
+  Widget build(BuildContext context) {
+    return loadableWidget(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('ScreenLoader Example'),
+        ),
+        body: _buildBody(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            await this.performFuture(NetworkService.getData);
+          },
+          child: Icon(Icons.refresh),
+        ),
       ),
     );
   }
 }
 
-class BasicScreen extends StatefulWidget {
-  @override
-  _BasicScreenState createState() => _BasicScreenState();
-}
+/// A Stateless screen
+class BasicScreen extends StatelessWidget with ScreenLoader {
+  BasicScreen({ Key? key }) : super(key: key);
 
-class _BasicScreenState extends State<BasicScreen>
-    with ScreenLoader<BasicScreen> {
   @override
-  Widget screen(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Basic ScreenLoader Example'),
-      ),
-      body: Center(
-        child: Icon(
-          Icons.home,
-          size: MediaQuery.of(context).size.width,
+  Widget build(BuildContext context) {
+    return loadableWidget(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Basic ScreenLoader Example'),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await this.performFuture(NetworkService.getData);
-        },
-        child: Icon(Icons.refresh),
+        body: Center(
+          child: Icon(
+            Icons.home,
+            size: MediaQuery.of(context).size.width,
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            await this.performFuture(NetworkService.getData);
+          },
+          child: Icon(Icons.refresh),
+        ),
       ),
     );
   }

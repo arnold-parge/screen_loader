@@ -2,32 +2,46 @@ library screen_loader;
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:stream_mixin/stream_mixin.dart';
 
-mixin ScreenLoader<T extends StatefulWidget> on State<T> {
-  bool isLoading = false;
-  static Widget? _globalLoader;
-  static double? _globalLoadingBgBlur = 5.0;
+void configScreenLoader({
+  required Widget? loader,
+  required double bgBlur,
+}) {
+  GlobalScreenLoader.loader = loader;
+  GlobalScreenLoader.bgBlur = bgBlur;
+}
+
+abstract class GlobalScreenLoader {
+  static Widget? loader;
+  static double bgBlur = 5.0;
+}
+
+class ScreenLoaderStream with StreamMixin<bool> {
+  @override
+  bool get lastUpdate => false;
+}
+
+
+mixin ScreenLoader {
+  final ScreenLoaderStream _screenLoaderStream = ScreenLoaderStream();
 
   /// starts the [loader]
   startLoading() {
-    setState(() {
-      isLoading = true;
-    });
+    _screenLoaderStream.update(true);
   }
 
   /// stops the [loader]
   stopLoading() {
-    setState(() {
-      isLoading = false;
-    });
+    _screenLoaderStream.update(false);
   }
-
-  /// DO NOT use this method in FutureBuilder because this methods
-  /// updates the state which will make future builder to call
-  /// this function again and it will go in loop
-  Future<T?> performFuture<T>(Function futureCallback) async {
+  
+  /// To avoid use of [startLoading] and [stopLoading] you use use
+  /// [performFuture] which will show the loader until the passed future call
+  /// is done executing
+  Future<U?> performFuture<U>(Function futureCallback) async {
     startLoading();
-    T? data = await futureCallback();
+    U? data = await futureCallback();
     stopLoading();
     return data;
   }
@@ -38,7 +52,7 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
   }
 
   double _loadingBgBlur() {
-    return loadingBgBlur() ?? ScreenLoader._globalLoadingBgBlur ?? 5.0;
+    return loadingBgBlur() ?? GlobalScreenLoader.bgBlur;
   }
 
   /// override [loader] if you wish to add custom loader in specific view
@@ -48,7 +62,7 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
 
   Widget _loader() {
     return loader() ??
-        ScreenLoader._globalLoader ??
+        GlobalScreenLoader.loader ??
         const CircularProgressIndicator();
   }
 
@@ -61,43 +75,28 @@ mixin ScreenLoader<T extends StatefulWidget> on State<T> {
     );
   }
 
-  Widget screen(BuildContext context);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget loadableWidget({required Widget child}) {
     return Stack(
       children: <Widget>[
-        screen(context),
-        if (isLoading)
-          BackdropFilter(
-            child: _buildLoader(),
-            filter: ImageFilter.blur(
-              sigmaX: _loadingBgBlur(),
-              sigmaY: _loadingBgBlur(),
-            ),
-          ),
+        child,
+        StreamBuilder<bool>(
+          initialData: false,
+          stream: _screenLoaderStream.onChange,
+          builder: (ctx, snap) {
+            if (!(snap.data ?? false)) {
+              return const SizedBox();
+            } else {
+              return BackdropFilter(
+                child: _buildLoader(),
+                filter: ImageFilter.blur(
+                  sigmaX: _loadingBgBlur(),
+                  sigmaY: _loadingBgBlur(),
+                ),
+              );
+            }
+          },
+        ),
       ],
     );
-  }
-}
-
-/// [ScreenLoaderApp] is used to provide global settings for the screen loader
-class ScreenLoaderApp extends StatelessWidget {
-  final MaterialApp app;
-  final Widget? globalLoader;
-  final double? globalLoadingBgBlur;
-
-  const ScreenLoaderApp({
-    Key? key,
-    required this.app,
-    this.globalLoader,
-    this.globalLoadingBgBlur,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    ScreenLoader._globalLoader = globalLoader;
-    ScreenLoader._globalLoadingBgBlur = globalLoadingBgBlur;
-    return app;
   }
 }
