@@ -72,7 +72,7 @@ class _ScreenState extends State<Screen> with ScreenLoader {
 
 /// A Stateless screen
 class BasicScreen extends StatelessWidget with ScreenLoader {
-  BasicScreen({ Key? key }) : super(key: key);
+  BasicScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

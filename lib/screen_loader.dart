@@ -22,7 +22,6 @@ class ScreenLoaderStream with StreamMixin<bool> {
   bool get lastUpdate => false;
 }
 
-
 mixin ScreenLoader {
   final ScreenLoaderStream _screenLoaderStream = ScreenLoaderStream();
 
@@ -35,7 +34,7 @@ mixin ScreenLoader {
   stopLoading() {
     _screenLoaderStream.update(false);
   }
-  
+
   /// To avoid use of [startLoading] and [stopLoading] you use use
   /// [performFuture] which will show the loader until the passed future call
   /// is done executing
