@@ -1,3 +1,7 @@
+## 4.0.1
+
+* Added back isLoading to indicate if the loader is showing
+
 ## 4.0.0
 
 * Added support for using the loader in `StatelessWidget` too

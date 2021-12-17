@@ -24,15 +24,18 @@ class ScreenLoaderStream with StreamMixin<bool> {
 
 mixin ScreenLoader {
   final ScreenLoaderStream _screenLoaderStream = ScreenLoaderStream();
+  bool isLoading = false;
 
   /// starts the [loader]
   startLoading() {
-    _screenLoaderStream.update(true);
+    isLoading = true;
+    _screenLoaderStream.update(isLoading);
   }
 
   /// stops the [loader]
   stopLoading() {
-    _screenLoaderStream.update(false);
+    isLoading = false;
+    _screenLoaderStream.update(isLoading);
   }
 
   /// To avoid use of [startLoading] and [stopLoading] you use use
