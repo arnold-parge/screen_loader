@@ -22,20 +22,19 @@ class ScreenLoaderStream with StreamMixin<bool> {
   bool get lastUpdate => false;
 }
 
+final ScreenLoaderStream _screenLoaderStream = ScreenLoaderStream();
+
 mixin ScreenLoader {
-  final ScreenLoaderStream _screenLoaderStream = ScreenLoaderStream();
-  bool isLoading = false;
+  bool get isLoading => _screenLoaderStream.lastUpdate;
 
   /// starts the [loader]
   startLoading() {
-    isLoading = true;
-    _screenLoaderStream.update(isLoading);
+    _screenLoaderStream.update(true);
   }
 
   /// stops the [loader]
   stopLoading() {
-    isLoading = false;
-    _screenLoaderStream.update(isLoading);
+    _screenLoaderStream.update(false);
   }
 
   /// To avoid use of [startLoading] and [stopLoading] you use use
@@ -49,35 +48,45 @@ mixin ScreenLoader {
   }
 
   /// override [loadingBgBlur] if you wish to change blur value in specific view
-  double? loadingBgBlur() {
-    return null;
-  }
-
-  double _loadingBgBlur() {
-    return loadingBgBlur() ?? GlobalScreenLoader.bgBlur;
+  double loadingBgBlur() {
+    return GlobalScreenLoader.bgBlur;
   }
 
   /// override [loader] if you wish to add custom loader in specific view
   Widget? loader() {
-    return null;
-  }
-
-  Widget _loader() {
-    return loader() ??
-        GlobalScreenLoader.loader ??
-        const CircularProgressIndicator();
+    return GlobalScreenLoader.loader ?? const CircularProgressIndicator();
   }
 
   Widget _buildLoader() {
     return Container(
       color: Colors.transparent,
       child: Center(
-        child: _loader(),
+        child: loader(),
       ),
     );
   }
 
-  Widget loadableWidget({required Widget child}) {
+  Widget loadableWidget({required Widget child}) => Loadable(
+        child: child,
+        loader: _buildLoader(),
+        blurSigma: loadingBgBlur(),
+      );
+}
+
+class Loadable extends StatelessWidget {
+  final Widget child;
+  final Widget loader;
+  final double blurSigma;
+
+  const Loadable({
+    required this.child,
+    required this.loader,
+    required this.blurSigma,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         child,
@@ -86,13 +95,13 @@ mixin ScreenLoader {
           stream: _screenLoaderStream.onChange,
           builder: (ctx, snap) {
             if (!(snap.data ?? false)) {
-              return const SizedBox();
+              return const SizedBox.shrink();
             } else {
               return BackdropFilter(
-                child: _buildLoader(),
+                child: loader,
                 filter: ImageFilter.blur(
-                  sigmaX: _loadingBgBlur(),
-                  sigmaY: _loadingBgBlur(),
+                  sigmaX: blurSigma,
+                  sigmaY: blurSigma,
                 ),
               );
             }

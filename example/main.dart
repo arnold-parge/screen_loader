@@ -30,7 +30,7 @@ class Screen extends StatefulWidget {
   _ScreenState createState() => _ScreenState();
 }
 
-/// A Stateful screen
+/// Showing loader in a Stateful screen
 class _ScreenState extends State<Screen> with ScreenLoader {
   @override
   loader() {
@@ -70,7 +70,7 @@ class _ScreenState extends State<Screen> with ScreenLoader {
   }
 }
 
-/// A Stateless screen
+/// Showing loader in a Stateless screen
 class BasicScreen extends StatelessWidget with ScreenLoader {
   BasicScreen({Key? key}) : super(key: key);
 
@@ -89,7 +89,13 @@ class BasicScreen extends StatelessWidget with ScreenLoader {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            await this.performFuture(NetworkService.getData);
+            await performFuture(NetworkService.getData);
+            // OR
+            await performFuture(() async {
+              // Do something.
+              await NetworkService.getData();
+              // Do some more things.
+            });
           },
           child: Icon(Icons.refresh),
         ),
@@ -100,6 +106,6 @@ class BasicScreen extends StatelessWidget with ScreenLoader {
 
 class NetworkService {
   static Future getData() async {
-    return await Future.delayed(Duration(seconds: 2));
+    return Future.delayed(Duration(seconds: 2));
   }
 }
